@@ -34,6 +34,11 @@ $app->get('/famPhoto/home/{$famName}', function (Request $request, Response $res
     return $this->renderer->render($response,'/family.php');
 });
 
+$app->get('/famPhoto/home/familyRoomFind', function (Request $request, Response $response, array $args) {
+    $response->getBody()->write("Hello,".$args['name']);
+    return $this->renderer->render($response,'/familyFind.php');
+});
+
 
 $app->get('/famPhoto/tweet',function(Request $request, Response $response, array $args){
     return $this->renderer->render($response,'/tweet.php');

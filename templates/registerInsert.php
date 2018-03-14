@@ -1,26 +1,21 @@
 <?php
 //     DB接続のファイル読み込み
-//    require_once "dbConnect.php";
+    require_once "dbConnect.php";
 
 //    戻るボタンの遷移先URL設定
 $goBackURL = "/register";
 $goLoginURL = "/login";
 
 //    セッションでサーバ上に情報保持させる
-session_start();
-
-//    $famName,$famPassをPOSTされる値に設定
-$userName = " ";
-$userPass = "　";
-//    パスワードの暗号化（phpのデフォルト関数）
-$hash = password_hash("$userPass", PASSWORD_DEFAULT) . "\n";
+//session_start();
 
 //    formに値が入っていない場合のエラー処理
 $error = "家族名・パスワード両方とも入力してください";
+$error2 = "UserNameがすでに使われている可能性があります。別のUserNameでお試しください";
 if (empty($_POST['userName']) && empty($_POST['userPass'])) {
     echo $error;
-} elseif (!isset($_POST['userName'])|| !isset($_POST['userPass'])) {
-    echo $error;
+} elseif (!isset($_POST['userName']) || !isset($_POST['userPass'])) {
+    echo $error,$error2;
 } else {
     $userName = $_POST['userName'];
     $userPass = $_POST['userPass'];
@@ -28,55 +23,51 @@ if (empty($_POST['userName']) && empty($_POST['userPass'])) {
     echo "<a href = \"<?php echo $goLoginURL?>\">ログイン画面へ</a>";
 }
 
-//    DBにつなぐ
-$user = 'twitter';
-$password = 'twitter';
-$dbName = 'Twitter';
-$host = 'localhost:8889';
-$dsn = "mysql:host={$host};dbname={$dbName};charset=utf8";
+try{
+    //    DBにつなぐ
+    $user='twitter';
+    $password='twitter';
+    $dbName='Twitter';
+    $host='localhost:8889';
+    $dsn="mysql:host={$host};dbname={$dbName};charset=utf8";
 
-
-try {
-//        プリペアドステートメントを作る
     $pdo = new PDO($dsn, $user, $password);
     $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+//    getDb();
 
-    $sql = "INSERT INTO user(name,password) VALUE (:userName,:userPass)";
-    $stm = $pdo->prepare($sql);
+    $userPass = $_POST['userName'];
+    $userPass = $_POST['userPass'];
 
+    //    パスワードの暗号化（phpのデフォルト関数）
+    $hash = password_hash("$userPass", PASSWORD_DEFAULT) . "\n";
 
-
-//        プレースホルダを作る
+    $sql="INSERT INTO user(name,password) VALUES (:userName,:userPass)";
+    $stm=$pdo->prepare($sql);
+    //        プレースホルダに値をバインドする
     $stm->bindValue(':userName', $userName, PDO::PARAM_STR);
-    $stm->bindValue(':userPass', $hash, PDO::PARAM_INT);
+    $stm->bindValue(':userPass', $hash, PDO::PARAM_STR);
 
-//    var_dump($stm);
-//    die;
-
-
+    //sql文によって正常にレコードが追加されていたら、全てのレコードを表示
     if($stm->execute()){
-        $sql = "SELECT name from User where name {$userName}";
-        $stm  = $pdo->prepare("$sql");
-        $stm->execute();
-        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+    $sql="SELECT * FROM user where name = {$userName}";
+    $stm=$pdo->prepare($sql);
+    $stm->execute();
+    $result=$stm->fetchAll(PDO::FETCH_ASSOC);
     }
-    echo "<a href = \"<?php echo $goLoginURL?>\">ログイン画面へ</a>";
-} catch (Exception $e) {
-    echo '<span class="error">エラーがありました。 </span><br>';
+    }catch (Exception $e){
+    echo '<span class="error">エラーがありました。</span>';
     echo $e->getMessage();
-    echo "<a href = \"<?php echo $goBackURL?>\">戻る</a>";
 }
-
 ?>
 
-
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <title>登録完了</title>
-</head>
-<body>
-
-</body>
-</html>
+<!---->
+<!--<!DOCTYPE html>-->
+<!--<html lang="ja">-->
+<!--<head>-->
+<!--    <title>登録完了</title>-->
+<!--</head>-->
+<!--<body>-->
+<!---->
+<!--</body>-->
+<!--</html>-->
