@@ -1,3 +1,4 @@
+<!--ここはユーザー専用の部屋-->
 
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,7 @@
 <body>
 <header>
     <a href="famPhoto/tweet">Tweet</a>
-    <a href="famPhoto/home/familyRoomFind">Family Roomを探する</a>
+    <a href="famPhoto/home/familyRoomFind">Family Roomを探す</a>
 </header>
     <h1>FamTwi</h1>
     <div>

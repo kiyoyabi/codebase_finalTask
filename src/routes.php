@@ -25,7 +25,7 @@ $app->get('/famPhoto', function (Request $request, Response $response, array $ar
     return $this->renderer->render($response,'/index.phtml');
 });
 
-$app->get('/famPhoto/home', function (Request $request, Response $response, array $args) {
+$app->get('/famPhoto/home/{$userName}', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response,'/famPhoto.php');
 });
 
@@ -63,6 +63,11 @@ $app->get('/register',function(Request $request, Response $response, array $args
 $app->get('/login',function(Request $request, Response $response, array $args){
     return $this->renderer->render($response,'/login.php');
 });
+
+$app->post('/login/confirm',function(Request $request, Response $response, array $args){
+    return $this->renderer->render($response,'/loginConfirm.php');
+});
+
 
 //
 //$app->post('/tweet/{tweet_id}/like',function(Request $request, Response $response, array $args){
