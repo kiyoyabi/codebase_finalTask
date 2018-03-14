@@ -21,29 +21,32 @@ use Slim\Http\Response;
 
 
 
-$app->get('/famTwi', function (Request $request, Response $response, array $args) {
+$app->get('/famPhoto', function (Request $request, Response $response, array $args) {
     return $this->renderer->render($response,'/index.phtml');
 });
 
-$app->get('/famTwi/home', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response,'/twitter.php');
+$app->get('/famPhoto/home', function (Request $request, Response $response, array $args) {
+    return $this->renderer->render($response,'/famPhoto.php');
 });
 
-$app->get('/famTwi/home/{userName}', function (Request $request, Response $response, array $args) {
+$app->get('/famPhoto/home/{$famName}', function (Request $request, Response $response, array $args) {
     $response->getBody()->write("Hello,".$args['name']);
-    return $this->renderer->render($response,'/myPage.php');
+    return $this->renderer->render($response,'/family.php');
 });
 
 
-$app->get('/famTwi/tweet',function(Request $request, Response $response, array $args){
+$app->get('/famPhoto/tweet',function(Request $request, Response $response, array $args){
     return $this->renderer->render($response,'/tweet.php');
 });
 
+//$app->post('/register', function (Request $request, Response $response) {
+//    $subject = $request->getParsedBodyParam('subject');
+//    // ここに保存の処理を書く
+//    // 保存が正常にできたら一覧ページへリダイレクトする
+//    return $response->withRedirect("/tickets");
+//});
+
 $app->post('/register/insert',function(Request $request, Response $response, array $args){
-    $subject = $request->getParsedBodyParam('subject');
-    // ここに保存の処理を書く
-    // 保存が正常にできたら一覧ページへリダイレクトする
-    return $response->withRedirect("/tickets");
     return $this->renderer->render($response,'/registerInsert.php');
 });
 

@@ -12,6 +12,11 @@
         <span>内容</span>
         <textarea class="tweetBody" cols="40" rows="20">
         </textarea><br>
+
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Example file input</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
     </form>
 </body>
 </html>
