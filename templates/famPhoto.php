@@ -8,8 +8,8 @@
 </head>
 <body>
 <header>
-    <a href="famTwi/tweet">Tweet</a>
-    <a href="famTwi/home/myPage">MyPage</a>
+    <a href="famPhoto/tweet">Tweet</a>
+    <a href="famPhoto/home/{famName}">Family Room</a>
 </header>
     <h1>FamTwi</h1>
     <div>
