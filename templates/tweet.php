@@ -20,3 +20,10 @@
     </form>
 </body>
 </html>
+
+<?php
+//      標準時刻のセット
+date_default_timezone_set('Asia/Tokyo');
+
+
+?>

@@ -9,11 +9,10 @@
 <body>
 <header>
     <a href="famPhoto/tweet">Tweet</a>
-    <a href="famPhoto/home/{famName}">Family Room</a>
+    <a href="famPhoto/home/familyRoomFind">Family Roomを探する</a>
 </header>
     <h1>FamTwi</h1>
     <div>
-        <!--            ここにDBとの接続かく。DB設計した-->
     </div>
     <?php
     require_once "dbConnect.php";
