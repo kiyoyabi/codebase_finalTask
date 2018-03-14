@@ -1,107 +1,38 @@
+<?php
+// ログイン済みの場合はリダイレクト
+if( isset($_SESSION['user']) != "") {
+    header("Location: /famPhoto/home");
+}?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>FamTwi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>FamilyTwi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="famPhoto.css" rel="stylesheet">
     <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <h1>FamTwi</h1>
-<div>ログイン</div>
-<form class="login" method="post" action="/login">
-    <div>
-        <input type="text" class="loginFamName" name="loginFamName">
+<h3>ログイン</h3>
+<form class="login" name="login" method="post" action="/login/confirm">
+    <div class="form-group">
+        <label for="exampleInputEmail1">User Name</label>
+        <input type="text" name="userName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="UserName">
+        <!--        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
     </div>
-    <div>
-        <input type="text" class="loginFamPass" name="loginFamPass">
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" name="userPass" class="form-control" id="exampleInputPassword1" placeholder="UserPass">
     </div>
-    <div>
-        <input type="submit" value="登録" name="login">
-    </div>
-    <div>
-        <?php
-        require_once "dbConnect.php";
-        session_start();
-
-        // 既にログインしている場合にはメインページに遷移
-        if (isset($_SESSION['id'])) {
-            header('Location: /home');
-            exit;
-        }
-
-        // ログインボタンが押されたら
-        if (isset($_POST['login'])) {
-            if (empty($_POST['loginFamName'])) {
-                $error = 'ユーザーIDが未入力です。';
-            } else if (empty($_POST['loginFamPass'])) {
-                $error = 'パスワードが未入力です。';
-            }
-        }
-//
-//         try{
-//            $sqlname = 'SELECT COUNT(*) FROM user WHERE `name` = '$username'';
-//            $ss = $pdo->query($sqlname);
-//            $count = $ss->fetchColumn();
-//            $id = strlen($_POST['password']);
-//            cheak($id,$count);
-//            $stmt = $pdo->prepare('INSERT INTO user (name, password) VALUES (:username, :password)');
-//            $pass = password_hash($password, PASSWORD_DEFAULT);
-//            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-//            $stmt->bindParam(':password', $pass, PDO::PARAM_STR);
-//            $stmt->execute();
-//            $_SESSION['USERID'] = $username;
-//            echo '<script>
-//            alert("登録が完了しました。");
-//            location.href="main.php";
-//            </script>';
-//             } catch(Exception $e){
-//            $error = $e->getMessage();
-//             }
-//             }
-
-         // 3. エラー処理  こっから先は解読必須！！！！！！！！！！！
-//        try {
-//
-//            $db = [];
-//
-//            $stmt = $db->prepare('SELECT * FROM family WHERE id = ?');
-//            $stmt->execute(array($id));
-//
-//            $password = $_POST["password"];
-//
-//            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-//                if (password_verify($password, $row['password'])) {
-//                    session_regenerate_id(true);
-//
-//                    // 入力したIDのユーザー名を取得
-//                    $id = $row['id'];
-//                    $sql = "SELECT * FROM family WHERE id = $id";  //入力したIDからユーザー名を取得
-//                    $stmt = $pdo->query($sql);
-//                    foreach ($stmt as $row) {
-//                        $row['name'];  // ユーザー名
-//                    }
-//                    $_SESSION["NAME"] = $row['name'];
-//                    header("Location: Main.php");  // メイン画面へ遷移
-//                    exit();  // 処理終了
-//                } else {
-//                    // 認証失敗
-//                    $errorMessage = 'ユーザーIDあるいはパスワードに誤りがあります。';
-//                }
-//            } else {
-//                // 4. 認証成功なら、セッションIDを新規に発行する
-//                // 該当データなし
-//                $errorMessage = 'ユーザーIDあるいはパスワードに誤りがあります。';
-//            }
-//        } catch (PDOException $e) {
-//            $errorMessage = 'データベースエラー';
-//            //$errorMessage = $sql;
-//            // $e->getMessage() でエラー内容を参照可能（デバッグ時のみ表示）
-//            // echo $e->getMessage();
-//        }
-
-        ?>
-    </div>
+    <button type="submit" class="btn btn-primary">ログインする</button>
 </form>
-<a href="/famTwi">戻る</a>
+
+<a href="/famPhoto">戻る</a>
 </body>
 </html>

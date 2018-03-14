@@ -1,4 +1,8 @@
-
+<?php
+// ログイン済みの場合はリダイレクト
+if( isset($_SESSION['user']) != "") {
+    header("Location: /famPhoto/home");
+}?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +18,7 @@
 </head>
 <body>
 <h1>FamTwi</h1>
-<div>新規登録</div>
+<h3>新規登録</h3>
 
 <form class="register" name="register" method="post" action="/register/insert">
     <div class="form-group">
@@ -24,9 +28,9 @@
     </div>
     <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" name="userPass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <input type="password" name="userPass" class="form-control" id="exampleInputPassword1" placeholder="UserPass">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">登録する</button>
 </form>
 
 <a href="/famPhoto">戻る</a>

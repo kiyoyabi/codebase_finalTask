@@ -27,7 +27,7 @@ function getDb(){
         $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(Exception $e) {
-        echo '<span class="error">エラーがありました。 </span><br>';
+        echo '<span class="error">エラーがありまし </span><br>';
         echo $e->getMessage();
     }
 return $pdo;
